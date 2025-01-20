@@ -1,19 +1,17 @@
 NAME = cub3D
-CC = cc
+CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 SRCPA = src/parsing
 SRCRA = src/raycasting
-LIBFT = src/libft/libft.a
-LIB =  -lmlx -framework OpenGL -framework AppKit -O3
+LIBS = src/libft/libft.a -Iminilibx-linux -Lminilibx-linux -lmlx -lXext -lX11 -lm 
 SRCP = $(wildcard $(SRCPA)/*.c)
 SRCR = $(wildcard $(SRCRA)/*.c)
-
 OBJ = $(SRCP:.c=.o) $(SRCR:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(LIBFT)
-	$(CC) $(CFLAGS) $(LIB) $(OBJ) $(LIBFT) -o $@
+$(NAME): $(OBJ)
+	$(CC) $(CFLAGS)  $(OBJ) $(LIBS)  -o $@
 
 clean:
 	rm -rf $(OBJ)

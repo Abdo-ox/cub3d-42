@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../cub3d.h"
-
+#include <math.h>
 void	get_images(t_lst *m)
 {
 	m->north->img = mlx_xpm_file_to_image(m->mx, m->no, &m->north->w,
@@ -37,19 +37,21 @@ void	get_images(t_lst *m)
 int	move_key(int k, t_lst *m)
 {
 	double	t;
-
+	bool nothing;
 	t = m->t;
-	if (k == 53)
+	
+	if (k == KEY_ESC)
 		exit(0);
 	put_ply(*m, (t_ps){100, 100}, BLACK);
 	rays(*m, 0, 0, BLACK);
 	var_angle(k, m);
-	(ok(m, k) == 125) && (m->p.x -= cos(t) * S, m->p.y -= sin(t) * S);
-	(ok(m, k) == 126) && (m->p.x += cos(t) * S, m->p.y += sin(t) * S);
-	(ok(m, k) == 0) && (m->p.x -= cos(t + PD) * S, m->p.y -= sin(t + PD) * S);
-	(ok(m, k) == 2) && (m->p.x += cos(t + PD) * S, m->p.y += sin(t + PD) * S);
-	(ok(m, k) == 13) && (m->p.x -= cos(t + PI) * S, m->p.y -= sin(t + PI) * S);
-	(ok(m, k) == 1) && (m->p.x += cos(t + PI) * S, m->p.y += sin(t + PI) * S);
+	nothing = (ok(m, k) == KEY_DOWN) && (m->p.x -= cos(t) * S, m->p.y -= sin(t) * S);
+	nothing = (ok(m, k) == KEY_UP) && (m->p.x += cos(t) * S, m->p.y += sin(t) * S);
+	nothing = (ok(m, k) == 0) && (m->p.x -= cos(t + PD) * S, m->p.y -= sin(t + PD) * S);
+	nothing = (ok(m, k) == 2) && (m->p.x += cos(t + PD) * S, m->p.y += sin(t + PD) * S);
+	nothing = (ok(m, k) == KEY_W) && (m->p.x -= cos(t + PI) * S, m->p.y -= sin(t + PI) * S);
+	nothing = (ok(m, k) == KEY_S) && (m->p.x += cos(t + PI) * S, m->p.y += sin(t + PI) * S);
+	(void)nothing;
 	rays(*m, 0, 0, BLUE);
 	putwindow(*m, m->map, m->p.x, m->p.y);
 	put_ply(*m, (t_ps){100, 100}, RED);
@@ -62,9 +64,9 @@ int	mousemove(int x, int y, t_lst *m)
 	if (x < 0 || y < 0 || x > WI || y > HI)
 		return (0);
 	if (x < m->old_p)
-		move_key(123, m);
+		move_key(KEY_LEFT, m);
 	else if (x > m->old_p)
-		move_key(124, m);
+		move_key(KEY_RIGHT, m);
 	m->old_p = x;
 	return (0);
 }
@@ -90,7 +92,7 @@ int	main(int ac, char **av)
 	rays(*m, 0, 0, BLUE);
 	mlx_put_image_to_window(m->mx, m->wn, m->im.p, 0, 0);
 	put_ply(*m, (t_ps){100, 100}, RED);
-	mlx_hook(m->wn, 2, 0, move_key, m);
+	mlx_hook(m->wn, 2, 1L<<0, move_key, m);
 	mlx_hook(m->wn, 6, 0, mousemove, m);
 	mlx_hook(m->wn, 17, 0, destroy, NULL);
 	mlx_loop(m->mx);

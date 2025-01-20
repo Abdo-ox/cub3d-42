@@ -12,22 +12,23 @@
 
 #include "../cub3d.h"
 
-double	get_angle(double t, double add, int i)
+double get_angle(double t, double add, int i)
 {
 	while (--i)
 	{
 		t -= add;
-		(t < 0) && (t = 2 * PI);
+		if (t < 0)
+			t = 2 * PI;
 	}
 	return (t);
 }
 
-void	my_mlxput_pixel(t_lst m, int x, int y, size_t color)
+void my_mlxput_pixel(t_lst m, int x, int y, size_t color)
 {
-	int	offset;
+	int offset;
 
 	if (x < 0 || y < 0 || x >= WI || y >= HI)
-		return ;
+		return;
 	offset = y * m.im.ln_len + x * (m.im.b_pxl / 8);
 	*((unsigned int *)(m.im.ad + offset)) = color;
 }

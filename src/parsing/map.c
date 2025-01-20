@@ -100,9 +100,7 @@ void	map_closed(char **map_test, int x, int y, int len)
 void	ft_map(t_lst *list, char *str_map)
 {
 	char	**map;
-	int		i;
 
-	i = -1;
 	check_map_valid(str_map, list);
 	map = ft_split(str_map, '\n');
 	space_join(map, -1);

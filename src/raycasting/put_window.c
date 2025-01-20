@@ -12,11 +12,11 @@
 
 #include "../cub3d.h"
 
-void	get_psplayer(t_lst *m, char **s)
+void get_psplayer(t_lst *m, char **s)
 {
-	int	k;
-	int	i;
-	int	j;
+	int k;
+	int i;
+	int j;
 
 	j = 0;
 	while (s[j])
@@ -29,17 +29,18 @@ void	get_psplayer(t_lst *m, char **s)
 			(s[j][i] == 'N') && (m->t = 3 * PD, k = 1);
 			(s[j][i] == 'E') && (m->t = 0, k = 1);
 			(s[j][i] == 'W') && (m->t = PI, k = 1);
-			(k) && (m->p.x = i * SQ + SQ / 2, m->p.y = j * SQ + SQ / 2);
+			if (k)
+				m->p.x = i * SQ + SQ / 2, m->p.y = j * SQ + SQ / 2;
 			i++;
 		}
 		j++;
 	}
 }
 
-int	put_squart(t_lst m, t_ps p, int x, int y)
+int put_squart(t_lst m, t_ps p, int x, int y)
 {
-	int	i;
-	int	j;
+	int i;
+	int j;
 
 	j = 0;
 	while (j < SQ)
@@ -59,18 +60,16 @@ int	put_squart(t_lst m, t_ps p, int x, int y)
 	return (0);
 }
 
-int	put_ply(t_lst m, t_ps p, int color)
+int put_ply(t_lst m, t_ps p, int color)
 {
-	double	x;
-	double	y;
-	int		j;
-	int		i;
+	double x;
+	double y;
+	int i;
 
 	i = WI;
 	m.t = get_angle(m.t, (PI / 3) / WI, WI / 2);
 	while (i--)
 	{
-		j = -1;
 		x = p.x;
 		y = p.y;
 		while (sqrt(pow(y - p.y, 2) + pow(x - p.x, 2)) < PL)
@@ -80,15 +79,16 @@ int	put_ply(t_lst m, t_ps p, int color)
 			my_mlxput_pixel(m, x, y, color);
 		}
 		m.t += (PI / 3) / WI;
-		(m.t > 2 * PI) && (m.t = 0);
+		if (m.t > 2 * PI)
+			m.t = 0;
 	}
 	return (0);
 }
 
-void	put_miniblack(t_lst m)
+void put_miniblack(t_lst m)
 {
-	int	i;
-	int	j;
+	int i;
+	int j;
 
 	i = 0;
 	while (i <= 200)
@@ -100,12 +100,12 @@ void	put_miniblack(t_lst m)
 	}
 }
 
-void	putwindow(t_lst m, char **p, int x, int y)
+void putwindow(t_lst m, char **p, int x, int y)
 {
-	int	k;
-	int	l;
-	int	i;
-	int	j;
+	int k;
+	int l;
+	int i;
+	int j;
 
 	k = x % SQ;
 	l = y % SQ;

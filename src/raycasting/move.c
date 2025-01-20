@@ -11,23 +11,25 @@
 /* ************************************************************************** */
 
 #include "../cub3d.h"
-
-int	ok(t_lst *m, int k)
+// #include <math.h>
+int ok(t_lst *m, int k)
 {
-	int	x;
-	int	y;
+	int x;
+	int y;
 
-	(k == 125) && (x = m->p.x - cos(m->t) * S, y = m->p.y - sin(m->t) * S);
-	(k == 126) && (x = m->p.x + cos(m->t) * S, y = m->p.y + sin(m->t) * S);
-	(k == 2) && (x = m->p.x + cos(m->t + PD) * S, y = m->p.y + sin(m->t + PD)
-			* S);
-	(k == 0) && (x = m->p.x - cos(m->t + PD) * S, y = m->p.y - sin(m->t + PD)
-			* S);
-	(k == 13) && (x = m->p.x - cos(m->t + PI) * S, y = m->p.y - sin(m->t + PI)
-			* S);
-	(k == 1) && (x = m->p.x + cos(m->t + PI) * S, y = m->p.y + sin(m->t + PI)
-			* S);
-	if (k == 126 || k == 125 || !k || k == 13 || k == 1 || k == 2)
+	if (k == KEY_DOWN)
+		x = m->p.x - cos(m->t) * S, y = m->p.y - sin(m->t) * S;
+	if (k == KEY_UP)
+		x = m->p.x + cos(m->t) * S, y = m->p.y + sin(m->t) * S;
+	if (k == 2)
+		x = m->p.x + cos(m->t + PD) * S, y = m->p.y + sin(m->t + PD) * S;
+	if (k == 0)
+		x = m->p.x - cos(m->t + PD) * S, y = m->p.y - sin(m->t + PD) * S;
+	if (k == KEY_W)
+		x = m->p.x - cos(m->t + PI) * S, y = m->p.y - sin(m->t + PI) * S;
+	if (k == 1)
+		x = m->p.x + cos(m->t + PI) * S, y = m->p.y + sin(m->t + PI) * S;
+	if (k == KEY_UP || k == KEY_DOWN || !k || k == 13 || k == 1 || k == 2)
 	{
 		(m->map[(int)((y + PM) / SQ)][(int)((x + PM) / SQ)] == '1') && (k = -1);
 		(m->map[(int)((y + PM) / SQ)][(int)((x - PM) / SQ)] == '1') && (k = -1);
@@ -37,21 +39,23 @@ int	ok(t_lst *m, int k)
 	return (k);
 }
 
-void	var_angle(int k, t_lst *m)
+void var_angle(int k, t_lst *m)
 {
-	if (k == 123)
+	if (k == KEY_LEFT)
 	{
 		m->t -= VAR_ANGLE;
-		(m->t < 0) && (m->t = 2 * PI);
+		if (m->t < 0)
+			m->t = 2 * PI;
 	}
-	if (k == 124)
+	if (k == KEY_RIGHT)
 	{
 		m->t += VAR_ANGLE;
-		(m->t > 2 * PI) && (m->t = 0);
+		if (m->t > 2 * PI)
+			m->t = 0;
 	}
 }
 
-int	check_wall(t_lst m, double x, double y, int k)
+int check_wall(t_lst m, double x, double y, int k)
 {
 	x = x / SQ;
 	y = y / SQ;
