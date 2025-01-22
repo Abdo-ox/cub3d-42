@@ -14,6 +14,9 @@
 
 void	drawln(t_lst m, t_ps p1, t_ps p2, int color)
 {
-	while (p1.y < p2.y)
-		my_mlxput_pixel(m, p1.x, p1.y++, color);
+	while (p1.y < p2.y){
+		if (p1.x > 200 || p1.y > 200)
+			my_mlxput_pixel(m, p1.x, p1.y, color);
+		p1.y++;
+	}
 }

@@ -51,7 +51,8 @@ void	texters(t_lst m, double dh, double x, double y)
 	while (p.start < p.end)
 	{
 		p.color = get_color(p.direction, p.x, p.y);
-		my_mlxput_pixel(m, m.i, p.start, p.color);
+		if (m.i > 200 || p.start > 200)
+			my_mlxput_pixel(m, m.i, p.start, p.color);
 		p.y += p.offy;
 		p.start++;
 	}

@@ -42,8 +42,8 @@ int	move_key(int k, t_lst *m)
 	
 	if (k == KEY_ESC)
 		exit(0);
-	put_ply(*m, (t_ps){100, 100}, BLACK);
-	rays(*m, 0, 0, BLACK);
+	//put_ply(*m, (t_ps){100, 100}, BLACK);
+	//rays(*m, 0, 0, BLACK);
 	var_angle(k, m);
 	nothing = (ok(m, k) == KEY_DOWN) && (m->p.x -= cos(t) * S, m->p.y -= sin(t) * S);
 	nothing = (ok(m, k) == KEY_UP) && (m->p.x += cos(t) * S, m->p.y += sin(t) * S);
@@ -88,8 +88,8 @@ int	main(int ac, char **av)
 	m->im.ad = mlx_get_data_addr(m->im.p, &m->im.b_pxl, &m->im.ln_len,
 			&m->im.edn);
 	get_psplayer(m, m->map);
-	putwindow(*m, m->map, m->p.x, m->p.y);
 	rays(*m, 0, 0, BLUE);
+	putwindow(*m, m->map, m->p.x, m->p.y);
 	mlx_put_image_to_window(m->mx, m->wn, m->im.p, 0, 0);
 	put_ply(*m, (t_ps){100, 100}, RED);
 	mlx_hook(m->wn, 2, 1L<<0, move_key, m);
